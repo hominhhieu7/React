@@ -131,7 +131,7 @@ export const DISHES = [
             {
                 id: 4,
                 rating: 2,
-                comment: "It's your birthday, we're gonna party!",
+                comment: "It's your birthdayaaaaaa, we're gonna party!",
                 author: "25 Cent",
                 date: "2011-12-02T17:57:28.556094Z"
             }
@@ -149,7 +149,7 @@ export const DISHES = [
             {
                 id: 0,
                 rating: 5,
-                comment: "Imagine all the eatables, living in conFusion!",
+                comment: "Imagine all the eatables, living in conFusion!bb",
                 author: "John Lemon",
                 date: "2012-10-16T17:57:28.556094Z"
             },
