@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 'reactstrap';
+import { Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap';
 
 class DishDetail extends Component {
-    constructor(props) {
-        super(props);
-    }
     renderDish(dish) {
         if (dish != null) {
             return (
@@ -30,8 +27,13 @@ class DishDetail extends Component {
     renderComments(comments){
         const commentList = comments.map((comment) => {
             return(
-                <div key={comment.id}>
-                    {comment.comment} <br /> {comment.author}  {comment.date}
+                <div key={comment.id} className="row">
+                <div className="col-8">
+                    {comment.author}: {comment.comment}
+                </div>
+                <div className="col-4">
+                     {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(Date.parse(comment.date))) }
+                </div>
                 </div>
             )
         });
@@ -48,6 +50,7 @@ class DishDetail extends Component {
     render() {
         if (this.props.dish) {
             return (
+                <div className="container">
                 <div className="row">
                     <div className="col-12 col-md-5 m-1">
                         {this.renderDish(this.props.dish)}
@@ -56,6 +59,7 @@ class DishDetail extends Component {
                         {this.renderComments(this.props.dish.comments)}
                     </div>
 
+                </div>
                 </div>
             );
 
