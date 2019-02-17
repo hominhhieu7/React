@@ -1,12 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap';
 
-class DishDetail extends Component {
-    renderDish(dish) {
+   function RenderDish({dish}) {
         if (dish != null) {
             return (
                 <Card>
-                    <CardImg width="100%" object src={dish.image} alt={dish.name} />
+                    <CardImg width="100%" object="true" src={dish.image} alt={dish.name} />
                     <CardBody>
                         <CardTitle>
                             {dish.name}
@@ -24,7 +23,7 @@ class DishDetail extends Component {
             );
         }
     }
-    renderComments(comments){
+   function RenderComments({comments}){
         const commentList = comments.map((comment) => {
             return(
                 <div key={comment.id} className="row">
@@ -46,20 +45,19 @@ class DishDetail extends Component {
             </div>
         );
     }
-    
-    render() {
-        if (this.props.dish) {
+    const DishDetail = (props) => {
+        if (props.dish != null) {
             return (
                 <div className="container">
-                <div className="row">
-                    <div className="col-12 col-md-5 m-1">
-                        {this.renderDish(this.props.dish)}
-                    </div>
-                    <div className="col-12 col-md-5 m-1">
-                        {this.renderComments(this.props.dish.comments)}
-                    </div>
+                    <div className="row">
+                        <div className="col-12 col-md-5 m-1">
+                            <RenderDish dish = {props.dish} />
+                        </div>
+                        <div className="col-12 col-md-5 m-1">
+                            <RenderComments comments={props.dish.comments} />
+                        </div>
 
-                </div>
+                    </div>
                 </div>
             );
 
@@ -69,7 +67,5 @@ class DishDetail extends Component {
                 <div></div>
             );
         }
-
     }
-}
 export default DishDetail;
