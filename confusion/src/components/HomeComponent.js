@@ -17,14 +17,12 @@ function RenderCard({ item }) {
 }
 
 function Home(props) {
-    debugger
     const Dish = props.dish
     const Leader = props.leader
     const Promotion = props.promotion
     return (
 
         <div className="container">
-            <h4>Home</h4>
             <div className="row align-items-start">
                 <div className="col-12 col-md m-1">
                     <RenderCard item={Dish} />
