@@ -18,7 +18,6 @@ function RenderMenuItem({ dish}) {
     );
 }
 
-console.log('Menu Component render is invoked');
 const Menu = (props) => {
     const menu = props.dishes.map((dish) => {
         return (
