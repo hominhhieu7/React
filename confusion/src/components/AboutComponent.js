@@ -4,17 +4,16 @@ import { Link } from 'react-router-dom';
 
 function About(props) {
 
-    const leaders = props.leaders.map((leader) => {
-        return (
-            <p>Leader {leader.name}</p>
-        );
-    });
+    // const leaders = props.leaders.map((leader) => {
+    //     return (
+    //         <p>Leader {leader.name}</p>
+    //     );
+    // });
     function RenderLeader({ leader }) {
-        debugger
         return (
             <Media key={leader.id} tag="li">
                 <Media left middle>
-                    <Media object="true" src={leader.image} alt={leader.name}></Media>
+                    <Media object src={leader.image} alt={leader.name}></Media>
                 </Media>
                 <Media body className="ml-5">
                     <Media heading>{leader.name}</Media>

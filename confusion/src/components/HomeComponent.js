@@ -9,7 +9,7 @@ function RenderCard({ item }) {
                 <CardTitle>
                     {item.name}
                 </CardTitle>
-                {item.designation ? <CardSubtitle>{item.designation}</CardSubtitle>:null }
+                {item.designation ? <CardSubtitle>{item.designation}</CardSubtitle> : null}
                 <CardText>{item.description}</CardText>
             </CardBody>
         </Card>
@@ -23,6 +23,9 @@ function Home(props) {
     return (
 
         <div className="container">
+            <div className="col-12">
+                <h3>Home</h3> <hr />
+            </div>
             <div className="row align-items-start">
                 <div className="col-12 col-md m-1">
                     <RenderCard item={Dish} />
