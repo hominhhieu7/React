@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { Breadcrumb, BreadcrumbItem, Button, Label, Col, Row } from 'reactstrap';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Link } from 'react-router-dom';
-import { onErrorResumeNext } from 'rxjs';
-
 
 const required = (val) => val && val.length; //check required
 const maxLength = (len) => (val) => !(val) || (val.length <= len); //check max length
@@ -101,7 +99,7 @@ class Contact extends Component {
                                     </div>
                                 </Col>
                                 <Col md={{ size: 2 }} >
-                                    <Control.select model=".contactType" className="form-control" type="select" name="contactType">
+                                    <Control.select model=".contactType" className="form-control" name="contactType">
                                         <option>Tel.</option>
                                         <option>Mail</option>
                                     </Control.select>
