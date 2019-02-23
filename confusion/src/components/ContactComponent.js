@@ -1,7 +1,15 @@
 import React, { Component } from 'react';
-import { Breadcrumb, BreadcrumbItem, Button, Label, Col,Row } from 'reactstrap';
+import { Breadcrumb, BreadcrumbItem, Button, Label, Col, Row } from 'reactstrap';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Link } from 'react-router-dom';
+import { onErrorResumeNext } from 'rxjs';
+
+
+const required = (val) => val && val.length; //check required
+const maxLength = (len) => (val) => !(val) || (val.length <= len); //check max length
+const minLength = (len) => (val) => (val) && (val.length >= len); //check min length
+const isNumber = (val) => !isNaN(Number(val)); //check number
+const valid = (val) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val); //check email
 
 class Contact extends Component {
     constructor(props) {
@@ -59,41 +67,41 @@ class Contact extends Component {
                             <Row className="form-group">
                                 <Label htmlFor="firstname" md={2}>First Name</Label>
                                 <Col md={6}>
-                                    <Control.text className="form-control" model=".firstname" id="firstname" name="firstname" placeholder="First Name" />
-                                    
+                                    <Control.text className="form-control" validators={{ required, minLength: minLength(3), maxLength: maxLength(15) }} model=".firstname" id="firstname" name="firstname" placeholder="First Name" />
+                                    <Errors className="text-danger" model=".firstname" show="touched" messages={{ required: 'Required ', minLength: 'Must be greater than 2 characters', maxLength: 'Must be 15 characters or less' }} />
                                 </Col>
                             </Row>
                             <Row className="form-group">
                                 <Label htmlFor="lastname" md={2}>Last Name</Label>
                                 <Col md={6}>
-                                    <Control.text className="form-control" model=".lastname" id="lastname" name="lastname" placeholder="Last Name"/>
-                                    
+                                    <Control.text className="form-control" validators={{ required, minLength: minLength(3), maxLength: maxLength(15) }} model=".lastname" id="lastname" name="lastname" placeholder="Last Name" />
+                                    <Errors className="text-danger" model=".lastname" show="touched" messages={{ required: 'Required ', minLength: 'Must be greater than 2 characters', maxLength: 'Must be 15 characters or less' }} />
                                 </Col>
                             </Row>
                             <Row className="form-group">
                                 <Label htmlFor="telenum" md={2}>Contact Tel.</Label>
                                 <Col md={6}>
-                                    <Control.text className="form-control" model=".telenum" type="tel" id="telenum" placeholder="Telephone Number"/>
-                                    
+                                    <Control.text className="form-control" validators={{ required, isNumber, minLength: minLength(10), maxLength: maxLength(15) }} model=".telenum" type="tel" id="telenum" placeholder="Telephone Number" />
+                                    <Errors className="text-danger" model=".telenum" show="touched" messages={{ required: 'Required ', minLength: ' Numbers greater than 10 number', maxLength: ' Numbers be 15 numbers or less ', isNumber: ' Must a numbers' }} />
                                 </Col>
                             </Row>
                             <Row className="form-group">
                                 <Label htmlFor="email" md={2}>Email</Label>
                                 <Col md={6}>
-                                    <Control.text className="form-control" model=".email" type="email" id="email" name="email" placeholder="Email"/>
-                                    
+                                    <Control.text className="form-control" validators={{ required, valid }} model=".email" type="email" id="email" name="email" placeholder="Email" />
+                                    <Errors className="text-danger" model=".email" show="touched" messages={{ required: 'Required ', valid: 'Invalid email adress'}}/>
                                 </Col>
                             </Row>
                             <Row className="form-group">
                                 <Col md={{ size: 4, offset: 2 }} >
                                     <div className="form-check">
                                         <Label check>
-                                            <Control.checkbox className="form-check-input" model=".agree" name="agree"/>{' '} <strong>May we contact you???</strong>
+                                            <Control.checkbox className="form-check-input" model=".agree" name="agree" />{' '} <strong>May we contact you???</strong>
                                         </Label>
                                     </div>
                                 </Col>
                                 <Col md={{ size: 2 }} >
-                                    <Control.select model=".contactType" className="form-control-" type="select" name="contactType">
+                                    <Control.select model=".contactType" className="form-control" type="select" name="contactType">
                                         <option>Tel.</option>
                                         <option>Mail</option>
                                     </Control.select>
@@ -102,7 +110,7 @@ class Contact extends Component {
                             <Row className="form-group">
                                 <Label htmlFor="message" md={2}>Your feedback</Label>
                                 <Col md={6}>
-                                    <Control.textarea model=".message" className="form-control" type="textarea" id="message" name="message" rows="10"/>
+                                    <Control.textarea model=".message" className="form-control" type="textarea" id="message" name="message" rows="10" />
                                 </Col>
                             </Row>
                             <Row className="form-group">
