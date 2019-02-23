@@ -43,7 +43,6 @@ class Contact extends Component {
         });
     }
     validate(firstname, lastname, telenum, email) {
-        debugger
         const errors = {
             firstname: '',
             lastname: '',
