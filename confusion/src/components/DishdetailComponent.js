@@ -26,30 +26,40 @@ function RenderDish({ dish }) {
         );
     }
 }
-function RenderComments({ comments }) {
-    const commentList = comments.map((comment) => {
+function RenderComments({ comments}) {
+    if(comments){
+        const commentList = comments.map((comment) => {
+            return (
+                <div key={comment.id} className="row">
+                    <div className="col-8">
+                        {comment.author}: {comment.comment}
+                    </div>
+                    <div className="col-4">
+                        {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(Date.parse(comment.date)))}
+                    </div>
+                </div>
+            )
+        });
         return (
-            <div key={comment.id} className="row">
-                <div className="col-8">
-                    {comment.author}: {comment.comment}
-                </div>
-                <div className="col-4">
-                    {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(Date.parse(comment.date)))}
-                </div>
-            </div>
-        )
-    });
-    return (
-        <div>
-            <h4>Comments</h4>
             <div>
-                {commentList}
+                <h4>Comments</h4>
+                <div>
+                    {commentList}
+                </div>
             </div>
-        </div>
-    );
+        );
+    }
+    else {
+        return(
+            <div></div>
+        );
+    }
+    
 }
 const DishDetail = (props) => {
+    
     if (props.dish != null) {
+        debugger
         return (
             <div className="container">
                 <div className="row">
@@ -66,8 +76,9 @@ const DishDetail = (props) => {
                         <RenderDish dish={props.dish} />
                     </div>
                     <div className="col-12 col-md-5 m-1">
-                        <RenderComments comments={props.comments} />
-                        <CommentForm/>
+                        <RenderComments comments={props.comments}
+                         />
+                        <CommentForm addComment={props.addComment} dishId={props.dish.id}/>
                     </div>
 
                 </div>
