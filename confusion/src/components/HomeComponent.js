@@ -5,7 +5,6 @@ import { baseUrl } from '../shared/baseUrl';
 
 
 function RenderCard({ item, isLoading, error}) {
-    debugger
     if (isLoading) {
         return (
             <div className="container">

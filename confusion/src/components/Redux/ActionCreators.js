@@ -19,8 +19,22 @@ export const addComment = (dishId, rating, author, comment) => ({
 
 export const fetchComments = () => (dishpatch) => {
     return fetch(baseUrl + 'comments')
-        .then(reponsive => reponsive.json()
-            .then(comments => dishpatch(addComments(comments))));
+        .then(response => {
+            if (response.ok) {
+                return response;
+            }
+            else {
+                var error = new Error('Error ' + response.status + ': ' + response.statusText);
+                error.response = response;
+                throw error;
+            }
+        }, error => {
+            var errmess = new Error(error.message);
+            throw errmess;
+        })
+        .then(response => response.json()
+            .then(comments => dishpatch(addComments(comments))))
+        .catch(error => dishpatch(commentsFailed(error.message)));
 }
 export const addComments = (comments) => ({
     type: ActionTypes.ADD_COMMENTS,
@@ -36,8 +50,24 @@ export const commentsFailed = (error) => ({
 export const fetchDishes = () => (dishpatch) => {
     dishpatch(dishesLoading(true));
     return fetch(baseUrl + 'dishes')
-        .then(reponsive => reponsive.json())
-        .then(dishes => dishpatch(addDishes(dishes)));
+        .then(response => {
+            if (response.ok) {
+                return response;
+            }
+            else {
+                var error = new Error('Error ' + response.status + ': ' + response.statusText);
+                error.response = response;
+                throw error;
+            }
+        },
+            error => {
+                var errmess = new Error(error.message);
+                throw errmess;
+            }
+        )
+        .then(response => response.json())
+        .then(dishes => dishpatch(addDishes(dishes)))
+        .catch(error => dishpatch(dishFailed(error.message)));
 };
 export const dishesLoading = () => ({
     type: ActionTypes.DISHES_LOADING
@@ -55,17 +85,31 @@ export const addDishes = (dishes) => ({
 export const fetchPromos = () => (dishpatch) => {
     dishpatch(promosLoading(true));
     return fetch(baseUrl + 'promotions')
-        .then(reponsive => reponsive.json())
-        .then(promos => dishpatch(addPromotions(promos)));
+        .then(response => {
+            if (response.ok) {
+                return response;
+            }
+            else {
+                var err = new Error('Error ' + response.status + ': ' + response.statusText);
+                err.response = response;
+                throw err;
+            }
+        }, error => {
+           var errmess = new Error(error.message);
+            throw errmess;
+        })
+        .then(response => response.json())
+        .then(promos => dishpatch(addPromotions(promos)))
+        .catch(error => dishpatch(promosFailed(error.message)));
 }
 export const promosLoading = () => ({
     type: ActionTypes.PROMOS_LOADING
 });
-export const addPromotions = (promos) =>({
+export const addPromotions = (promos) => ({
     type: ActionTypes.ADD_PROMOS,
     payload: promos
 });
-export const promosFailed = (error) =>({
+export const promosFailed = (error) => ({
     type: ActionTypes.PROMOS_FAILED,
     payload: error
 });
