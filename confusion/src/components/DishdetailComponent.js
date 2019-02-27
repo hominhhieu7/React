@@ -2,13 +2,15 @@ import React from 'react';
 import { Card, CardImg, CardText, CardBody, CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import CommentForm from './CommentForm';
-import { Loading } from './LoadingComponent'
+import { Loading } from './LoadingComponent';
+import { baseUrl } from '../shared/baseUrl';
+
 
 function RenderDish({ dish }) {
     if (dish != null) {
         return (
             <Card>
-                <CardImg width="100%" object="true" src={dish.image} alt={dish.name} />
+                <CardImg width="100%" object="true" src={baseUrl +dish.image} alt={dish.name} />
                 <CardBody>
                     <CardTitle>
                         {dish.name}
@@ -57,7 +59,7 @@ function RenderComments({ comments }) {
 
 }
 const DishDetail = (props) => {
-    if (props.isLoading) {
+    if (props.dishLoading) {
         return (
             <div className="container">
                 <div className="row">
@@ -66,11 +68,11 @@ const DishDetail = (props) => {
             </div>
         );
     }
-    else if (props.error) {
+    else if (props.errorDish) {
         return (
             <div className="container">
                 <div className="row">
-                    <h4>{props.error}</h4>
+                    <h4>{props.errorDish}</h4>
                 </div>
             </div>
         )
