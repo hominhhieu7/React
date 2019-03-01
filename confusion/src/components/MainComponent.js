@@ -8,7 +8,7 @@ import Footer from './FooterComponent';
 import DishDetail from './DishdetailComponent';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { addComment, fetchDishes, fetchPromos,fetchComments } from './Redux/ActionCreators';
+import { postComment, fetchDishes, fetchPromos,fetchComments } from './Redux/ActionCreators';
 import { actions } from 'react-redux-form';
 
 
@@ -22,7 +22,7 @@ const mapStateToProps = state => {
     }
 };
 const mapDishpatchToProps = (dishpatch) => ({
-    addComment: (dishId, rating, author, comment) => dishpatch(addComment(dishId, rating, author, comment)),
+    postComment: (dishId, rating, author, comment) => dishpatch(postComment(dishId, rating, author, comment)),
     fetchDishes: () => { dishpatch(fetchDishes()) },
     resetFeedbackForm: () =>{dishpatch(actions.reset('feedback'))},
     fetchComments: () => {dishpatch(fetchComments())},
@@ -57,7 +57,7 @@ class Main extends Component {
                     dishLoading={this.props.dishes.isLoading}
                     errorDish={this.props.dishes.error}
                     comments={this.props.comments.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId), 10)}
-                    addComment={this.props.addComment}
+                    postComment={this.props.postComment}
                     commentsLoading = {this.props.comments.isLoading}
                     errorComment= {this.props.comments.error}
                 />

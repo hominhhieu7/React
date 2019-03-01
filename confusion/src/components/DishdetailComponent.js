@@ -96,7 +96,7 @@ const DishDetail = (props) => {
                     <div className="col-12 col-md-5 m-1">
                         <RenderComments comments={props.comments}
                         />
-                        <CommentForm addComment={props.addComment} dishId={props.dish.id} />
+                        <CommentForm postComment={props.postComment} dishId={props.dish.id} />
                     </div>
 
                 </div>
