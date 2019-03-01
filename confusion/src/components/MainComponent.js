@@ -8,8 +8,9 @@ import Footer from './FooterComponent';
 import DishDetail from './DishdetailComponent';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { postComment, fetchDishes, fetchPromos,fetchComments } from './Redux/ActionCreators';
+import { postComment, fetchDishes, fetchPromos, fetchComments } from './Redux/ActionCreators';
 import { actions } from 'react-redux-form';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 
 
@@ -24,9 +25,9 @@ const mapStateToProps = state => {
 const mapDishpatchToProps = (dishpatch) => ({
     postComment: (dishId, rating, author, comment) => dishpatch(postComment(dishId, rating, author, comment)),
     fetchDishes: () => { dishpatch(fetchDishes()) },
-    resetFeedbackForm: () =>{dishpatch(actions.reset('feedback'))},
-    fetchComments: () => {dishpatch(fetchComments())},
-    fetchPromos: () => {dishpatch(fetchPromos())}
+    resetFeedbackForm: () => { dishpatch(actions.reset('feedback')) },
+    fetchComments: () => { dishpatch(fetchComments()) },
+    fetchPromos: () => { dishpatch(fetchPromos()) }
 });
 
 
@@ -47,7 +48,7 @@ class Main extends Component {
                     promosLoading={this.props.promotions.isLoading}
                     errorPromo={this.props.promotions.error}
                     leader={this.props.leaders.filter((leader) => leader.featured)[0]}
-                    
+
                 />
             );
         }
@@ -58,8 +59,8 @@ class Main extends Component {
                     errorDish={this.props.dishes.error}
                     comments={this.props.comments.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId), 10)}
                     postComment={this.props.postComment}
-                    commentsLoading = {this.props.comments.isLoading}
-                    errorComment= {this.props.comments.error}
+                    commentsLoading={this.props.comments.isLoading}
+                    errorComment={this.props.comments.error}
                 />
             );
         }
@@ -72,14 +73,18 @@ class Main extends Component {
         return (
             <div>
                 <Header />
-                <Switch>
-                    <Route path="/home" component={HomePage} />
-                    <Route path="/about" component={AboutPage} />
-                    <Route exact path="/menu" component={() => <Menu dishes={this.props.dishes} />} />
-                    <Route path="/menu/:dishId" component={DishWithId} />
-                    <Route exact path="/contactus" component={() =><Contact resetFeedbackForm={this.props.resetFeedbackForm} />} />
-                    <Redirect to="/home" />
-                </Switch>
+                <TransitionGroup>
+                    <CSSTransition key={this.props.location.key} classNames="page" timeout={300} >
+                        <Switch>
+                            <Route path="/home" component={HomePage} />
+                            <Route path="/about" component={AboutPage} />
+                            <Route exact path="/menu" component={() => <Menu dishes={this.props.dishes} />} />
+                            <Route path="/menu/:dishId" component={DishWithId} />
+                            <Route exact path="/contactus" component={() => <Contact resetFeedbackForm={this.props.resetFeedbackForm} />} />
+                            <Redirect to="/home" />
+                        </Switch>
+                    </CSSTransition>
+                </TransitionGroup>
                 <Footer />
             </div>
         );
