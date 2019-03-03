@@ -66,11 +66,11 @@ export const fetchComments = () => (dishpatch) => {
             .then(comments => dishpatch(addComments(comments))))
         .catch(error => dishpatch(commentsFailed(error.message)));
 }
-export const addComments = (comments) => ({
+const addComments = (comments) => ({
     type: ActionTypes.ADD_COMMENTS,
     payload: comments
 });
-export const commentsFailed = (error) => ({
+const commentsFailed = (error) => ({
     type: ActionTypes.COMMENTS_FAILED,
     payload: error
 });
@@ -99,14 +99,14 @@ export const fetchDishes = () => (dishpatch) => {
         .then(dishes => dishpatch(addDishes(dishes)))
         .catch(error => dishpatch(dishFailed(error.message)));
 };
-export const dishesLoading = () => ({
+const dishesLoading = () => ({
     type: ActionTypes.DISHES_LOADING
 });
-export const dishFailed = (error) => ({
+const dishFailed = (error) => ({
     type: ActionTypes.DISHES_FAILED,
     payload: error
 });
-export const addDishes = (dishes) => ({
+const addDishes = (dishes) => ({
     type: ActionTypes.DISHES_ADDED,
     payload: dishes
 });
@@ -132,14 +132,15 @@ export const fetchPromos = () => (dishpatch) => {
         .then(promos => dishpatch(addPromotions(promos)))
         .catch(error => dishpatch(promosFailed(error.message)));
 }
-export const promosLoading = () => ({
+const promosLoading = () => ({
     type: ActionTypes.PROMOS_LOADING
 });
-export const addPromotions = (promos) => ({
+const addPromotions = (promos) => ({
     type: ActionTypes.ADD_PROMOS,
     payload: promos
 });
-export const promosFailed = (error) => ({
+const promosFailed = (error) => ({
     type: ActionTypes.PROMOS_FAILED,
     payload: error
 });
+
